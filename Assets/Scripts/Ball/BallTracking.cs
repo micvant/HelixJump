@@ -6,6 +6,7 @@ public class BallTracking : MonoBehaviour
 {
     [SerializeField] private Vector3 _directionOffSet;
     [SerializeField] private float _lenght;
+
     private Ball _ball;
     private Beam _beam;
     private Vector3 _cameraPosition;
@@ -32,8 +33,12 @@ public class BallTracking : MonoBehaviour
     }
     private void TrackBall()
     {
+        Vector3 beamPosition = _beam.transform.position;
+        
+        beamPosition.y  = _ball.transform.position.y;
         _cameraPosition = _ball.transform.position;
-        Vector3 direction = (_beam.transform.position - _ball.transform.position).normalized + _directionOffSet;
+
+        Vector3 direction = (beamPosition - _ball.transform.position - _ball.transform.position).normalized + _directionOffSet;
         _cameraPosition -= direction * _lenght;
         transform.position = _cameraPosition;
         transform.LookAt(_ball.transform);
